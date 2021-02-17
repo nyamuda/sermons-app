@@ -6,15 +6,94 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto+Slab&display=swap" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: "Roboto Slab", serif;
+        }
+        
+        #nav,
+        #foot {
+            width: 100%;
+            text-align: center;
+            background-color: #0f2027;
+            padding-top: 0.1rem;
+            padding-bottom: 0.1rem;
+            border-radius: 5px;
+        }
+        
+        #nav p {
+            font-size: 2rem;
+            color: #ffffff;
+            font-family: "Lobster", cursive;
+        }
+        
+        #about {
+            position: relative;
+            top: 5rem;
+            width: 80%;
+            margin: auto;
+        }
+        
+        p img {
+            max-width: 80%;
+            height: auto;
+        }
+        
+        #bigItemContainer {
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            row-gap: 1.5rem;
+            position: relative;
+            top: 5rem;
+            margin: auto;
+        }
+        
+        #foot {
+            position: relative;
+            top: 7rem;
+            color: #ffffff;
+            border-radius: 0px;
+            display: none;
+        }
+        
+        #title {
+            position: relative;
+            margin: auto;
+            text-align: center;
+            top: 5rem;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="content"></div>
+    <header>
+        <div id="nav">
+            <p>Father's Heart</p>
+        </div>
+    </header>
 
-    <div id="bigItemContainer"></div>
+    <main>
+        <div id="about"></div>
+        <p id="title"></p>
+        <div id="bigItemContainer"></div>
+    </main>
+    <footer>
+        <div id="foot">
+            <p>&#169; 2021 - Father's Heart</p>
+        </div>
+    </footer>
     <script>
-        const bodyCont = document.getElementById("content");
+        const bodyCont = document.getElementById("about");
         const bigItemContainer = document.getElementById("bigItemContainer");
+        const foot = document.getElementById("foot");
+        const sermonTitle = document.getElementById("title");
 
         window.onload = function() {
             //the displayItem function fetches the items data and then displays them.
@@ -73,6 +152,12 @@
 
                         //then the Timeline property which mainly contains the items
                         displayItems(response.Timeline);
+
+                        //adding the title "Sermons " to the displayed items
+                        sermonTitle.innerText = "Sermons";
+
+                        //displaying the footer
+                        foot.style.display = "block";
                     })
                     .catch((err) => {
                         console.log(err);
