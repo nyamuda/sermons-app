@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="content"></div>
+
+    <div id="bigItemContainer"></div>
+    <script>
+        const bodyCont = document.getElementById("content");
+        const bigItemContainer = document.getElementById("bigItemContainer");
+
+        window.onload = function() {
+            //the displayItem function fetches the items data and then displays them.
+
+            function displayItems(par) {
+                par.forEach((element) => {
+                    //creating the container of each item
+                    let itemContainer = document.createElement("div");
+
+                    //creating the element for the title
+                    let itemTitle = document.createElement("p");
+                    //adding the title
+                    itemTitle.innerText = element.Title;
+
+                    //creating the element for the image
+                    let itemImg = document.createElement("img");
+
+                    //adding the image url
+                    itemImg.setAttribute(
+                        "src",
+                        `https://arthurfrost.qflo.co.za/${element.Image}`
+                    );
+
+                    //creating the element for the audio
+                    let itemAudio = document.createElement("audio");
+
+                    //adding the audio url
+                    itemAudio.setAttribute(
+                        "src",
+                        `https://arthurfrost.qflo.co.za/${element.Audio}`
+                    );
+                    //adding the controls attribute
+                    itemAudio.setAttribute("controls", "true");
+
+                    //adding all the elements to the container;
+                    itemContainer.appendChild(itemImg);
+                    itemContainer.appendChild(itemTitle);
+                    itemContainer.appendChild(itemAudio);
+
+                    //then finally adding the container to the bigItemContainer
+                    bigItemContainer.appendChild(itemContainer);
+                });
+            }
+
+            //making the AJAX call using the Fetch API
+            function getData() {
+                fetch("https://arthurfrost.qflo.co.za/php/getTimeline.php")
+                    .then((val) => {
+                        return val.json();
+                    })
+                    .then((response) => {
+                        console.log(response);
+
+                        //first fetching the Body property which mainly contains the About data
+                        bodyCont.innerHTML = response.Body[0].About;
+
+                        //then the Timeline property which mainly contains the items
+                        displayItems(response.Timeline);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            }
+
+            //invoking the getData function
+            getData();
+        };
+    </script>
+</body>
+
+</html>
